@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include <string>
 using namespace std;
 
 class Board
@@ -13,6 +12,6 @@ public:
 private:
 	int mBoardWidth;
 	int mBoardHeight;
-	vector<vector<string>> b;
+	vector<vector<class Cell*>> mBoard;
 };
 

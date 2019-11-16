@@ -1,24 +1,37 @@
 #include "Board.h"
+#include "Cell.h"
 
 
 Board::Board():
 	mBoardWidth(9)
 	,mBoardHeight(9)
 {
-	//temp‚Ìƒƒ‚ƒŠ‚ğ–¾¦“I‚É‰ğ•ú‚·‚é‚É‚ÍH—Ç‚¢‘‚«•û‚Í‚ ‚é‚©H
-	//‚â‚è‚½‚¢‚±‚Æ‚Íb‚Ì‰Šú‰»
-	vector<vector<string>> temp(mBoardWidth, vector<string>(mBoardHeight, " "));
-	b = temp;
+	for (int i = 0; i < mBoardHeight; i++) {
+		vector<Cell*> temp2;
+		for (int j = 0; j < mBoardWidth; j++) {
+			Cell* temp = new Cell();
+			temp2.emplace_back(temp);
+		}
+		mBoard.emplace_back(temp2);
+	}
 }
 
 void Board::Show()
 {
-	for (const auto& cellw : b)
+	for (const auto& cellrow : mBoard)
 	{
-		for(const auto& cell : cellw)
+		for (const auto& cell : cellrow)
+		{
+			if (cell->GetExist())
 			{
-			cout << cell + ",";
+				cout << cell->GetName();
 			}
+			else
+			{
+				cout << " ";
+			}
+			cout << ",";
+		}
 		cout << endl;
 	}
 	cout << endl;
@@ -28,17 +41,17 @@ bool Board::SetPiece(string piece, int row, int column)
 {
 	if (row < 0 || mBoardWidth < row)
 	{
-		cout << "Error:Assigned Piece is out of board range. " <<endl;
+		cout << "Error:Assigned piece is out of board range. " << endl;
 		return false;
 	}
 
 	if (column < 0 || mBoardHeight < column)
 	{
-		cout << "Error:Assigned Piece is out of board range." << endl;
+		cout << "Error:Assigned piece is out of board range." << endl;
 		return false;
 	}
 
-	b[column][row] = piece;
+	mBoard[column][row]->Set(piece);
 
 	return true;
 }
